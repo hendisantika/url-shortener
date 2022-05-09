@@ -64,4 +64,9 @@ public class UrlService {
         Url urlToRet = urlRepository.save(url);
         return urlToRet;
     }
+
+    public Url getEncodedUrl(String url) {
+        Url urlToRet = urlRepository.findByShortLink(url);
+        return urlToRet;
+    }
 }
