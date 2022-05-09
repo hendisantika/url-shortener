@@ -1,5 +1,6 @@
 package com.hendisantika.service;
 
+import com.google.common.hash.Hashing;
 import com.hendisantika.dto.UrlDTO;
 import com.hendisantika.model.Url;
 import com.hendisantika.repository.UrlRepository;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
 /**
@@ -47,5 +49,14 @@ public class UrlService {
         }
         LocalDateTime expirationDateToRet = LocalDateTime.parse(expirationDate);
         return expirationDateToRet;
+    }
+
+    private String encodeUrl(String url) {
+        String encodedUrl = "";
+        LocalDateTime time = LocalDateTime.now();
+        encodedUrl = Hashing.murmur3_32()
+                .hashString(url.concat(time.toString()), StandardCharsets.UTF_8)
+                .toString();
+        return encodedUrl;
     }
 }
