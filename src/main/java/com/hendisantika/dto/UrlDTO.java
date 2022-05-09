@@ -1,4 +1,4 @@
-package com.hendisantika.model;
+package com.hendisantika.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
