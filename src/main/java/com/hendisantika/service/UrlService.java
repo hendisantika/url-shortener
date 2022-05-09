@@ -69,4 +69,8 @@ public class UrlService {
         Url urlToRet = urlRepository.findByShortLink(url);
         return urlToRet;
     }
+
+    public void deleteShortLink(Url url) {
+        urlRepository.delete(url);
+    }
 }
