@@ -7,6 +7,7 @@ import com.hendisantika.repository.UrlRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -27,6 +28,9 @@ import java.time.LocalDateTime;
 public class UrlService {
     private final UrlRepository urlRepository;
 
+    @Value("${expiration.time}")
+    private int expirationTime;
+
     public Url generateShortLink(UrlDTO urlDto) {
         if (StringUtils.isNotEmpty(urlDto.getUrl())) {
             String encodedUrl = encodeUrl(urlDto.getUrl());
@@ -45,7 +49,7 @@ public class UrlService {
 
     private LocalDateTime getExpirationDate(String expirationDate, LocalDateTime creationDate) {
         if (StringUtils.isBlank(expirationDate)) {
-            return creationDate.plusSeconds(60);
+            return creationDate.plusMinutes(expirationTime);
         }
         LocalDateTime expirationDateToRet = LocalDateTime.parse(expirationDate);
         return expirationDateToRet;
