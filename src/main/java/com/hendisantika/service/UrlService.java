@@ -59,4 +59,9 @@ public class UrlService {
                 .toString();
         return encodedUrl;
     }
+
+    public Url persistShortLink(Url url) {
+        Url urlToRet = urlRepository.save(url);
+        return urlToRet;
+    }
 }
